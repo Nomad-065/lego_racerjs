@@ -28,10 +28,10 @@ function Speedo({speed, maxSpeed = 28}) {
         />
         <circle cx="60" cy="60" r="4" fill="white"/>
       </svg>
-      <div className="absolute bottom-5 w-full text-center font-mono font-bold text-[22px] text-white glow-red">
+      <div className="absolute bottom-5 w-full text-center  font-bold text-[22px] text-white glow-red">
         {kmh}
       </div>
-      <div className="absolute bottom-1.5 w-full text-center text-[10px] font-mono tracking-[0.2em] text-text-muted">
+      <div className="absolute bottom-1.5 w-full text-center text-[10px]  tracking-[0.2em] text-text-muted">
         KM/H
       </div>
     </div>
@@ -45,8 +45,8 @@ function RpmBar({rpm, gear}) {
   return (
     <div className="w-48">
       <div className="flex justify-between mb-1">
-        <span className="text-[11px] font-mono tracking-wide text-text-muted">RPM</span>
-        <span className={`text-[11px] font-mono ${redline ? 'text-race-red' : 'text-text-muted'}`}>
+        <span className="text-[11px]  tracking-wide text-text-muted">RPM</span>
+        <span className={`text-[11px] ${redline ? 'text-race-red' : 'text-text-muted'}`}>
           {Math.round(rpm)}
         </span>
       </div>
@@ -62,8 +62,8 @@ function RpmBar({rpm, gear}) {
         />
       </div>
       <div className="text-center mt-1.5">
-        <span className="text-[28px] font-black font-mono text-white leading-none glow-blue">{gear}</span>
-        <span className="text-[10px] font-mono text-text-muted ml-0.5">GEAR</span>
+        <span className="text-[28px] font-black  text-white leading-none glow-blue">{gear}</span>
+        <span className="text-[10px]  text-text-muted ml-0.5">GEAR</span>
       </div>
     </div>
   )
@@ -72,12 +72,12 @@ function RpmBar({rpm, gear}) {
 function LapCounter({lap, totalLaps, position, total}) {
   return (
     <div className="text-center">
-      <div className="text-[11px] font-mono tracking-[0.2em] text-text-muted mb-0.5">LAP</div>
-      <div className="text-[32px] font-black font-mono text-white leading-none">
+      <div className="text-[11px]  tracking-[0.2em] text-text-muted mb-0.5">LAP</div>
+      <div className="text-[32px] font-black  text-white leading-none">
         {Math.min(lap + 1, totalLaps)}
         <span className="text-[16px] text-text-muted">/{totalLaps}</span>
       </div>
-      <div className={`mt-1 text-[11px] font-mono tracking-wide ${position === 1 ? 'text-gold' : 'text-text-muted'}`}>
+      <div className={`mt-1 text-[11px]  tracking-wide ${position === 1 ? 'text-gold' : 'text-text-muted'}`}>
         P{position}/{total}
       </div>
     </div>
@@ -89,11 +89,11 @@ function Leaderboard({standings}) {
   return (
     <div
       className="absolute top-5 right-5 bg-black/60 rounded-lg px-3.5 py-2.5 min-w-[140px] backdrop-blur-sm border border-white/[0.08]">
-      <div className="text-[10px] font-mono tracking-[0.2em] text-text-muted mb-1.5">STANDINGS</div>
+      <div className="text-[10px]  tracking-[0.2em] text-text-muted mb-1.5">STANDINGS</div>
       {standings.map((s, i) => (
         <div
           key={s.id}
-          className={`flex gap-2 items-center py-0.5 text-[12px] font-mono ${s.isPlayer ? 'text-race-red font-bold' : 'text-white/70'}`}
+          className={`flex gap-2 items-center py-0.5 text-[12px] ${s.isPlayer ? 'text-race-red font-bold' : 'text-white/70'}`}
         >
           <span className="w-4 text-white/30">P{i + 1}</span>
           <span>{s.isPlayer ? '▶ YOU' : `AI ${s.id}`}</span>
@@ -108,7 +108,7 @@ function CountdownOverlay({value}) {
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
       <div
-        className={`font-black font-mono leading-none tracking-[-4px] animate-countdown ${value === 0 ? 'text-gold glow-gold' : 'text-white'}`}
+        className={`font-black leading-none tracking-[-4px] animate-countdown ${value === 0 ? 'text-gold glow-gold' : 'text-white'}`}
         style={{fontSize: value === 0 ? '80px' : '120px'}}
       >
         {value === 0 ? 'GO!' : value}
@@ -120,23 +120,23 @@ function CountdownOverlay({value}) {
 function FinishedOverlay({position, onRestart, onMenu}) {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/[0.82] pointer-events-auto">
-      <div className={`text-[64px] font-black font-mono mb-2 glow-gold text-gold`}>
+      <div className={`text-[64px] font-black  mb-2 glow-gold text-gold`}>
         {position === 1 ? '🏆 1ST!' : `P${position}`}
       </div>
-      <div className="text-lg font-mono tracking-[0.15em] text-white/60 mb-10">
+      <div className="text-lg tracking-[0.15em] text-white/60 mb-10">
         {position === 1 ? 'RACE COMPLETE' : 'RACE FINISHED'}
       </div>
       <div className="flex gap-3">
         <button
           onClick={onRestart}
-          className="px-8 py-3 text-[13px] font-mono font-bold tracking-[0.15em] text-white bg-race-red border-none rounded-md cursor-pointer hover:-translate-y-0.5 transition-transform"
+          className="px-8 py-3 text-[13px]  font-bold tracking-[0.15em] text-white bg-race-red border-none rounded-md cursor-pointer hover:-translate-y-0.5 transition-transform"
           style={{boxShadow: '0 0 20px rgba(230,57,70,0.4)'}}
         >
           RACE AGAIN
         </button>
         <button
           onClick={onMenu}
-          className="px-8 py-3 text-[13px] font-mono font-bold tracking-[0.15em] text-white/70 bg-transparent border border-white/20 rounded-md cursor-pointer hover:text-white hover:border-white/40 transition-colors"
+          className="px-8 py-3 text-[13px]  font-bold tracking-[0.15em] text-white/70 bg-transparent border border-white/20 rounded-md cursor-pointer hover:text-white hover:border-white/40 transition-colors"
         >
           MAIN MENU
         </button>

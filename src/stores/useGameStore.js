@@ -46,9 +46,9 @@ export const useGameStore = create((set, get) => ({
 
   // ── Settings ────────────────────────────────────────────────────────────────
   settings: {
-    masterVolume: 80,
-    sfxVolume: 100,
-    musicVolume: 60,
+    masterVolume: 0.80,
+    sfxVolume: 1.00,
+    musicVolume: 0.01,
     shadows: true,
     antialias: true,
     showFps: false,

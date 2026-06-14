@@ -21,12 +21,17 @@ import {Environment} from './components/Environment'
 import {LapSystem} from './components/LapSystem'
 import {HUD} from './components/HUD'
 
-import {IntroScreen} from './screens/IntroScreen'
-import {MainMenu} from './screens/MainMenu'
+import {IntroScreen} from './pages/IntroScreen'
+import {MainMenu} from './pages/MainMenu'
 import {RaceSelectScreen} from './screens/RaceSelectScreen'
-import {SettingsScreen} from './screens/SettingsScreen'
+import {SettingsScreen} from './pages/SettingsScreen.jsx'
 
 import {useGameStore, APP_SCREENS} from './stores/useGameStore'
+import Layout from "./components/layout.jsx";
+import {
+  Route,
+  Routes,
+} from "react-router-dom";
 
 const AI_COLORS = ['#4cc9f0', '#7209b7', '#f77f00', '#06d6a0', '#ffd60a']
 
@@ -50,43 +55,56 @@ export default function App() {
   const showCanvas = CANVAS_SCREENS.has(screen)
 
   return (
-    <div className="w-screen h-screen relative bg-black">
+    <Routes>
+      <Route element={
+        // <ProtectedRoutes>
+        <Layout/>
+        // </ProtectedRoutes>
+      }>
+        <Route path="/" element={<IntroScreen/>}/>
 
-      {/* ── 3D Canvas — always mounted, hidden during menus ─────────────────── */}
-      <div
-        className="absolute inset-0 transition-opacity duration-[600ms] ease-in-out"
-        style={{
-          opacity: showCanvas ? 1 : 0,
-          pointerEvents: showCanvas ? 'auto' : 'none',
-        }}
-      >
-        <Canvas
-          shadows
-          camera={{fov: 60, near: 0.1, far: 300}}
-          gl={{antialias: true}}
-        >
-          <Environment/>
-          <Physics gravity={[0, -25, 0]} timeStep="vary" paused={!isRaceActive}>
-            <Track/>
-            <PlayerCar/>
-            {AI_COLORS.map((color, i) => (
-              <AICar key={i + 1} carId={i + 1} colorHex={color}/>
-            ))}
-            <LapSystem/>
-          </Physics>
-          <FollowCamera/>
-        </Canvas>
-      </div>
+        <Route path="/main" element={<MainMenu/>}/>
+        <Route path="/race-select" element={<RaceSelectScreen/>}/>
+        <Route path="/settings" element={<SettingsScreen/>}/>
+      </Route>
+      {/*<div className="h-screen relative font-racers bg-black flex flex-col w-full p-10">*/}
 
-      {/* ── In-game HUD (only during race) ──────────────────────────────────── */}
-      {showCanvas && <HUD/>}
+      {/*  /!* ── 3D Canvas — always mounted, hidden during menus ─────────────────── *!/*/}
+      {/*  /!*<div*!/*/}
+      {/*  /!*  className="absolute inset-0 transition-opacity duration-600 ease-in-out"*!/*/}
+      {/*  /!*  style={{*!/*/}
+      {/*  /!*    opacity: showCanvas ? 1 : 0,*!/*/}
+      {/*  /!*    pointerEvents: showCanvas ? 'auto' : 'none',*!/*/}
+      {/*  /!*  }}*!/*/}
+      {/*  /!*>*!/*/}
+      {/*  /!*  <Canvas*!/*/}
+      {/*  /!*    shadows*!/*/}
+      {/*  /!*    camera={{fov: 60, near: 0.1, far: 300}}*!/*/}
+      {/*  /!*    gl={{antialias: true}}*!/*/}
+      {/*  /!*  >*!/*/}
+      {/*  /!*    <Environment/>*!/*/}
+      {/*  /!*    <Physics gravity={[0, -25, 0]} timeStep="vary" paused={!isRaceActive}>*!/*/}
+      {/*  /!*      <Track/>*!/*/}
+      {/*  /!*      <PlayerCar/>*!/*/}
+      {/*  /!*      {AI_COLORS.map((color, i) => (*!/*/}
+      {/*  /!*        <AICar key={i + 1} carId={i + 1} colorHex={color}/>*!/*/}
+      {/*  /!*      ))}*!/*/}
+      {/*  /!*      <LapSystem/>*!/*/}
+      {/*  /!*    </Physics>*!/*/}
+      {/*  /!*    <FollowCamera/>*!/*/}
+      {/*  /!*  </Canvas>*!/*/}
+      {/*  /!*</div>*!/*/}
 
-      {/* ── Full-screen menu overlays ────────────────────────────────────────── */}
-      <IntroScreen/>
-      <MainMenu/>
-      <RaceSelectScreen/>
-      <SettingsScreen/>
+      {/*  /!* ── In-game HUD (only during race) ──────────────────────────────────── *!/*/}
+      {/*  /!*{showCanvas && <HUD/>}*!/*/}
 
-    </div>
-  )
-}
+      {/*  /!* ── Full-screen menu overlays ────────────────────────────────────────── *!/*/}
+      {/*  /!*<IntroScreen/>*!/*/}
+      {/*  /!*<MainMenu/>*!/*/}
+      {/*  /!*<RaceSelectScreen/>*!/*/}
+      {/*  /!*<SettingsScreen/>*!/*/}
+
+      {/*</div>*/}
+    </Routes>
+  );
+};

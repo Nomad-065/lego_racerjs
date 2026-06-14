@@ -72,20 +72,20 @@ function TrackCard({track, selected, onClick}) {
         className="absolute left-0 top-0 bottom-0 w-0.5 transition-opacity duration-200"
         style={{background: track.accent, opacity: active ? 1 : 0.3}}
       />
-      <div className="font-mono font-bold text-[15px] tracking-wide mb-1"
+      <div className=" font-bold text-[15px] tracking-wide mb-1"
            style={{color: active ? 'white' : 'rgba(255,255,255,0.7)'}}>
         {track.name}
       </div>
-      <div className="text-[10px] font-mono tracking-[0.2em] mb-2.5" style={{color: track.accent}}>
+      <div className="text-[10px]  tracking-[0.2em] mb-2.5" style={{color: track.accent}}>
         {track.location}
       </div>
-      <div className="flex gap-3 text-[10px] text-text-muted font-mono">
+      <div className="flex gap-3 text-[10px] text-text-muted ">
         <span>{track.length}</span><span>·</span>
         <span>{track.turns} TURNS</span><span>·</span>
         <span>{track.difficulty}</span>
       </div>
       {!track.unlocked && (
-        <div className="mt-2 text-[9px] text-white/25 font-mono tracking-[0.2em]">🔒 LOCKED</div>
+        <div className="mt-2 text-[9px] text-white/25  tracking-[0.2em]">🔒 LOCKED</div>
       )}
     </button>
   )
@@ -98,7 +98,7 @@ function LapSelector({value, onChange}) {
         <button
           key={n}
           onClick={() => onChange(n)}
-          className="px-4 py-2 rounded font-mono text-sm text-white cursor-pointer outline-none transition-all duration-150"
+          className="px-4 py-2 rounded text-sm text-white cursor-pointer outline-none transition-all duration-150"
           style={{
             background: value === n ? '#e63946' : 'rgba(255,255,255,0.05)',
             border: `1px solid ${value === n ? '#e63946' : 'rgba(255,255,255,0.1)'}`,
@@ -125,11 +125,11 @@ function DifficultySelector({value, onChange}) {
             border: `1px solid ${value === d.key ? '#e63946' : 'rgba(255,255,255,0.08)'}`,
           }}
         >
-          <div className="text-[12px] font-bold font-mono tracking-wide mb-0.5"
+          <div className="text-[12px] font-bold tracking-wide mb-0.5"
                style={{color: value === d.key ? '#e63946' : 'rgba(255,255,255,0.7)'}}>
             {d.label}
           </div>
-          <div className="text-[9px] font-mono text-text-muted">{d.sub}</div>
+          <div className="text-[9px] text-text-muted">{d.sub}</div>
         </button>
       ))}
     </div>
@@ -160,7 +160,7 @@ export function RaceSelectScreen() {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-cockpit flex flex-col font-mono overflow-y-auto"
+      className="fixed inset-0 z-50 bg-cockpit flex flex-col  overflow-y-auto"
       style={{padding: 'clamp(24px, 4vh, 48px) clamp(24px, 5vw, 80px)'}}
     >
       {/* Header */}
