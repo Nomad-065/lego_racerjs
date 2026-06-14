@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind v4 — CSS-first configuration.
+ * No tailwind.config.js needed. All customisation lives here via @theme.
+ *
+ * Design system:
+ *   - Racing red   #e63946  (primary accent)
+ *   - Deep black   #0a0a0a  (background)
+ *   - Cockpit gray #1a1a2e  (surface)
+ *   - Neon blue    #4cc9f0  (secondary)
+ *   - Warning gold #ffd60a  (alerts, P1)
+ */
+
+@theme {
+  /* ── Colors ─────────────────────────────────────────────────────────────── */
+  --color-race-red:    #e63946;
+  --color-race-red-dark: #9d0208;
+  --color-race-pink:   #ff006e;
+  --color-cockpit:     #0a0a0a;
+  --color-surface:     #141414;
+  --color-surface-2:   #1e1e1e;
+  --color-border:      rgba(255,255,255,0.08);
+  --color-neon-blue:   #4cc9f0;
+  --color-neon-purple: #7209b7;
+  --color-neon-green:  #06d6a0;
+  --color-neon-orange: #f77f00;
+  --color-gold:        #ffd60a;
+  --color-text:        rgba(255,255,255,0.9);
+  --color-text-muted:  rgba(255,255,255,0.4);
+  --color-text-dim:    rgba(255,255,255,0.18);
+
+  /* ── Typography ─────────────────────────────────────────────────────────── */
+  --font-mono: "Courier New", "Courier", monospace;
+
+  /* ── Custom spacing ─────────────────────────────────────────────────────── */
+  --spacing-18: 4.5rem;
+
+  /* ── Shadows / glows ────────────────────────────────────────────────────── */
+  --shadow-red-glow:  0 0 24px rgba(230,57,70,0.4);
+  --shadow-blue-glow: 0 0 24px rgba(76,201,240,0.4);
+}
+
+/* ── Base resets ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  overflow: hidden;
+  background: #000;
+  font-family: "Courier New", monospace;
+  color: white;
+}
+
+/* ── Utility: scanlines overlay ──────────────────────────────────────────── */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+}
+
+/* ── Utility: red glow text ──────────────────────────────────────────────── */
+.glow-red  { text-shadow: 0 0 30px rgba(230,57,70,0.5); }
+.glow-gold { text-shadow: 0 0 30px rgba(255,214,10,0.5); }
+.glow-blue { text-shadow: 0 0 20px rgba(76,201,240,0.5); }
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+@keyframes fadein-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes speedline {
+  0%   { transform: translateX(100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(-200vw); opacity: 0; }
+}
+@keyframes pulse-scale {
+  from { transform: scale(1.3); opacity: 0.6; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes countdown-pop {
+  0%   { transform: scale(1.4); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+.animate-fadein-up   { animation: fadein-up 0.5s ease both; }
+.animate-fadein      { animation: fadein 0.8s ease both; }
+.animate-slide-left  { animation: slide-in-left 0.5s ease both; }
+.animate-speedline   { animation: speedline linear infinite; }
+.animate-pulse-scale { animation: pulse-scale 0.4s ease-out; }
+.animate-countdown   { animation: countdown-pop 0.4s ease-out; }
