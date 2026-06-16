@@ -62,36 +62,8 @@ function MenuItem({label, sub, onClick, delay = 0, disabled = false}) {
 export function MainMenu() {
   const screen = useGameStore((s) => s.screen)
   const setScreen = useGameStore((s) => s.setScreen)
-  const musicVolume = useGameStore((s) => s.settings.musicVolume);
   const navigate = useNavigate()
-  const audioRef = useRef(null);
 
-  useEffect(() => {
-    // if (
-    //   screen !== APP_SCREENS.MAIN_MENU
-    //   // && screen !== APP_SCREENS.RACE_SELECT
-    // ) {
-    //   return;
-    // }
-
-    const audio = new Audio("/assets/audios/menu_theme.m4a");
-    audio.loop = true;
-    audio.volume = musicVolume;
-
-    audio.play().catch((err) => {
-      console.log("Audio blocked until user interaction:", err);
-    });
-
-    audioRef.current = audio;
-
-    return () => {
-      audio.pause();
-      audio.currentTime = 0;
-      audioRef.current = null;
-    };
-  }, []);
-
-  // if (screen !== APP_SCREENS.MAIN_MENU) return null
   const menuItems = useMemo(
     () => [
       {label: 'BUILD', route: '/settings', spacerAfter: true},
@@ -99,7 +71,7 @@ export function MainMenu() {
       {label: 'SINGLE RACE', route: '/settings'},
       {label: 'VERSUS RACE', route: '/settings'},
       {label: 'TIME RACE', route: '/settings', spacerAfter: true},
-      {label: 'OPTIONS', route: '/settings', spacerAfter: true},
+      {label: 'OPTIONS', route: '/options', spacerAfter: true},
       {
         label: 'QUIT',
         // action: () => window.close()

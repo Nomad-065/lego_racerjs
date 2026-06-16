@@ -2,8 +2,9 @@
  * SettingsScreen.jsx — Tailwind v4
  */
 
-import {useState} from 'react'
-import {useGameStore, APP_SCREENS} from '../stores/useGameStore.js'
+import {useMemo, useState} from 'react'
+import {useGameStore, APP_SCREENS} from '../../stores/useGameStore.js'
+import {useNavigate} from "react-router-dom";
 
 function BackButton({onClick}) {
   return (
@@ -140,53 +141,67 @@ function ControlsTab({settings, update}) {
   )
 }
 
-export function SettingsScreen() {
+export function OptionsScreen() {
   const screen = useGameStore((s) => s.screen)
   const setScreen = useGameStore((s) => s.setScreen)
   const settings = useGameStore((s) => s.settings)
   const updateSetting = useGameStore((s) => s.updateSetting)
-  const [activeTab, setActiveTab] = useState(0)
+  const navigate = useNavigate()
 
-  if (screen !== APP_SCREENS.SETTINGS) return null
+
+  const menuItems = useMemo(
+    () => [
+      {label: 'GAME OPTIONS', route: '/settings'},
+      {label: 'AUDIO OPTIONS', route: '/settings'},
+      {label: 'PLAYER CONTROLS', route: '/settings'},
+      {label: 'PICK LANGUAGE', route: '/settings'},
+      {label: 'VIEW CREDITS', route: '/settings', spacerAfter: true},
+      {
+        label: 'MAIN MENU',
+        // action: () => window.close()
+        route: '/main'
+      },
+    ],
+    []
+  )
+
 
   return (
-    <div className="fixed inset-0 z-50 bg-cockpit flex flex-col overflow-hidden"
-         style={{padding: 'clamp(24px, 4vh, 48px) clamp(24px, 5vw, 80px)'}}>
+    <div className="flex flex-1 h-full w-full">
 
-      {/* Header */}
-      <div className="flex items-center gap-5 mb-10 pb-5 border-b border-white/[0.06]">
-        <BackButton onClick={() => setScreen(APP_SCREENS.MAIN_MENU)}/>
-        <div>
-          <div className="text-xl font-black  text-white tracking-[-1px]">SETTINGS</div>
-          <div className="text-[10px] tracking-[0.25em] text-text-muted ">SYSTEM CONFIGURATION</div>
-        </div>
-      </div>
+      {/* Left content */}
+      <div className="w-1/2 flex flex-col h-full p-10">
 
-      <div className="grid gap-10 flex-1" style={{gridTemplateColumns: '200px 1fr'}}>
-        {/* Tab sidebar */}
-        <div>
-          {TABS.map((tab, i) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(i)}
-              className="block w-full text-left bg-transparent border-none cursor-pointer py-3  text-[13px] tracking-[0.15em] outline-none transition-all duration-150 pl-4"
-              style={{
-                fontWeight: activeTab === i ? 700 : 400,
-                color: activeTab === i ? 'white' : 'rgba(255,255,255,0.35)',
-                borderLeft: `2px solid ${activeTab === i ? '#e63946' : 'transparent'}`,
+
+        <div
+          className={'flex-1 flex flex-col p-6 items-start justify-center text-yellow-400/50 text-outline-black-100 text-[40px] overflow-auto'}>
+          {menuItems.map((item) => (
+            <span
+              key={item.label}
+              className={`hover:text-yellow-400 cursor-pointer ${
+                item.spacerAfter ? 'mb-10' : ''
+              }`}
+              onClick={() => {
+                if (item.action) {
+                  item.action()
+                } else {
+                  navigate(item.route)
+                }
               }}
             >
-              {tab}
-            </button>
+              {item.label}
+            </span>
           ))}
         </div>
 
-        {/* Tab content */}
-        <div className="max-w-sm">
-          {activeTab === 0 && <AudioTab settings={settings} update={updateSetting}/>}
-          {activeTab === 1 && <GraphicsTab settings={settings} update={updateSetting}/>}
-          {activeTab === 2 && <ControlsTab settings={settings} update={updateSetting}/>}
-        </div>
+      </div>
+      <div className="w-1/2 flex flex-col h-full p-10">
+        <span className={'text-white text-[58px] text-right'}>OPTIONS</span>
+      </div>
+
+      {/* Build info */}
+      <div className="absolute bottom-6 left-12 text-md tracking-[0.2em] text-white/50 ">
+        LEGO RacerJS v0.1.0 · BUILD 2026
       </div>
     </div>
   )

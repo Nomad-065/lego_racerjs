@@ -24,7 +24,7 @@ import {HUD} from './components/HUD'
 import {IntroScreen} from './pages/IntroScreen'
 import {MainMenu} from './pages/MainMenu'
 import {RaceSelectScreen} from './screens/RaceSelectScreen'
-import {SettingsScreen} from './pages/SettingsScreen.jsx'
+import {OptionsScreen} from './pages/options/OptionsScreen.jsx'
 
 import {useGameStore, APP_SCREENS} from './stores/useGameStore'
 import Layout from "./components/layout.jsx";
@@ -32,6 +32,8 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import LoadingRoutes from "./routes/LoadingRoutes.jsx";
+import MenuRoutes from "./routes/MenuRoutes.jsx";
 
 const AI_COLORS = ['#4cc9f0', '#7209b7', '#f77f00', '#06d6a0', '#ffd60a']
 
@@ -56,16 +58,15 @@ export default function App() {
 
   return (
     <Routes>
-      <Route element={
-        // <ProtectedRoutes>
-        <Layout/>
-        // </ProtectedRoutes>
-      }>
+      <Route element={<LoadingRoutes/>}>
         <Route path="/" element={<IntroScreen/>}/>
+      </Route>
+
+      <Route element={<MenuRoutes/>}>
 
         <Route path="/main" element={<MainMenu/>}/>
         <Route path="/race-select" element={<RaceSelectScreen/>}/>
-        <Route path="/settings" element={<SettingsScreen/>}/>
+        <Route path="/options" element={<OptionsScreen/>}/>
       </Route>
       {/*<div className="h-screen relative font-racers bg-black flex flex-col w-full p-10">*/}
 
